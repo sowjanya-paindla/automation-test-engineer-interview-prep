@@ -1,4 +1,4 @@
-##Find duplicate elements in a list
+##Find duplicate elements in a list##
 s = [1, 2, 3, 2, 4, 5, 1]
 
 printed = []
