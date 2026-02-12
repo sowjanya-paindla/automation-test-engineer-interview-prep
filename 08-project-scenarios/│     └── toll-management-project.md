@@ -1,72 +1,83 @@
-Can you describe the key challenges you encountered during your project and how you addressed them?”
+Challenge Faced in the Project – Electronic Toll System Automation
 
-During my Toll Management Project, one of the major challenges I faced was related to transaction posting and balance deduction testing.
+Background 
+While working on the Electronic Toll Collection (ETC) system, one of the core components of our project is the transaction processing engine. When a customer travels on our/partner roads a trip will be generated and posted through a .tr file to our toll authority. These files are critical because they contain complete trip information like at trip time, which lane, which plaza , occupant LOV/HOB , vehicle class, fare.
+Each .tr file includes:
+A Header record (file generation date, checksum, file size, etc.)
 
-🔹 Situation:
 
-The system manages customers, tags, vehicles, and payment processing.
-To deduct balance from a customer account, we needed to post transactions using a .tr file format provided by the development team.
+A Pre-processing record
 
-🔹 Challenge:
 
-The challenge was:
+A Transaction record containing 50+ comma-separated fields (such as lane number, transaction date and time, tag ID, charging amount, discount amount, image count, timestamps, and more)
 
-Each .tr file had to be manually modified for different accounts.
 
-Fields like Tag ID, Subscriber ID, checksum, and file name had to be unique.
+Initially, the process of creating and posting .tr files was done manually by the team. We have to:
+Enter specific fields in the file manually
 
-Even a small mistake would cause transaction failure.
 
-File names had to be unique.
+Recalculate checksum and file size
 
-If transactions were posted within 60 seconds, the system marked them as duplicate transactions.
 
-Files were uploaded manually using FileZilla, which was time-consuming.
+Use FileZilla to upload/post the file
 
-Testing multiple accounts manually was very complex and inefficient.
 
-🔹 Action Taken:
+This process took more than one hour just to post a single transaction for a specific vehicle. During testing, this became a major bottleneck because validating transaction processing required multiple file updates, and each change consumed significant time and effort.
+The Challenge
+The main challenge I faced was reducing the time required to test transaction processing. Our team was spending over an hour for a single transaction update, which slowed down the overall testing cycle.
+Additionally:
+The .tr file structure was complex, with more than 50 fields
 
-To solve this problem:
 
-I carefully studied the ICD document to understand the file structure.
+Each field had a specific format and validation rule as per the ICD (Interface Control Document)
 
-I collaborated with the development team and attended KT sessions.
 
-I wrote a Python script to:
+The file required accurate checksum and file size calculation
 
-Automatically generate .tr files
 
-Dynamically update Tag ID, Subscriber ID, checksum
+Even a small formatting error would cause transaction rejection
 
-Ensure unique file names
 
-I automated the FileZilla upload process using Python.
+Understanding every field and its significance took considerable effort.
 
-To solve the duplicate transaction issue, I implemented a 60-second delay (sleep function) between transactions.
+The Solution
+To overcome this problem, I decided to automate the entire process using Python.
+I referred to the ICD documentation in detail and:
+Analyzed each field in the .tr file structure
 
-I also enhanced the script to support:
 
-T0 to T10 transaction types
+Understood the validation rules and formatting standards
 
-Lane-based transaction configuration
 
-Multiple accounts testing
+Wrote Python scripts to dynamically generate valid .tr files
 
-Initially, my first few attempts produced incorrect outputs, but after debugging and validating against expected results, I successfully implemented the correct solution.
 
-🔹 Result:
+Implemented logic to automatically calculate checksum and file size
 
-Reduced manual effort significantly
 
-Enabled bulk transaction posting for multiple accounts
+Automated the posting process instead of manually using FileZilla
 
-Improved testing efficiency
 
-My entire team started using my automation script
+My first attempt did not produce the exact expected output.
+ The second attempt gave partial results.
+ After refining the logic and correcting formatting issues, the third iteration successfully generated valid .tr files.
+It took me more than three days of continuous effort to fully automate the process.
 
-Later, when APIs were introduced for transaction posting, the transition was smooth because we already understood the logic deeply
+Impact
+After implementing the automation:
+The team can now post a transaction for any vehicle within 1 minute
 
-🎯 Strong Closing Line for Interview:
 
-“This experience improved my automation skills, problem-solving ability, and collaboration with cross-functional teams.”
+Multiple transactions can now be generated and posted in under a minute
+
+
+Manual dependency was eliminated
+
+
+Testing efficiency improved drastically
+
+
+Overall project turnaround time was significantly reduced
+
+
+This experience not only improved our workflow but also enhanced my understanding of structured file processing, checksum logic, and automation using Python.
