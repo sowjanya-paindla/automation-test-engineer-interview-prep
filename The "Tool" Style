@@ -1,0 +1,37 @@
+When I use dir() and see many built-in methods (like strip, upper, lower),
+is there a way in Python to check:
+The syntax of that method
+The parameters it accepts
+
+It is a classic Python "rite of passage" to use dir() and realize you've just opened a digital junk drawer. While dir() tells you what is there, it’s notoriously tight-lipped about how to use it.
+To get the syntax and parameters, you have a few built-in "inspectors" at your disposal.
+
+1. The help() Function (The Gold Standard)
+This is the most direct way to get a readable summary of a method, including its signature and a brief description.
+
+How to use it: Pass the method itself (without parentheses) into help().
+
+Example:
+
+Python
+help(str.strip)
+What you'll see: strip(self, chars=None, /)
+It will then explain that it returns a copy of the string with leading and trailing characters removed.
+
+2. The __doc__ Attribute
+Every well-behaved Python method has a "docstring." You can access this string directly if you want a quick, raw look at the documentation without the formatted help() interface.
+
+Example:
+
+Python
+print(str.upper.__doc__)
+3. The inspect Module (For the Pros)
+If you are writing code that needs to programmatically figure out what parameters a method takes (rather than just reading it yourself), use the inspect module.
+
+How to use it:
+
+Python
+import inspect
+sig = inspect.signature(str.replace)
+print(sig) 
+# Output: (self, old, new, count=-1, /)
